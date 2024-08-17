@@ -1,6 +1,9 @@
 # superhero-rpg-app
 Companion app for my superhero RPG
 
+# Stack
+MongoDB, Express, React, Node
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
