@@ -21,14 +21,14 @@ const handleLogin = async (req, res) => {
       {
         userInfo: {
           username: foundUser.username,
-          email: foundUser.email
+          profile: foundUser.profile
         }
       },
       process.env.ACCESS_TOKEN_SECRET,
       { expiresIn: '2m' }
     );
     const refreshToken = jwt.sign(
-      { username: foundUser.username },
+      { username: foundUser.username, profile: foundUser.profile },
       process.env.REFRESH_TOKEN_SECRET,
       { expiresIn: '1d' }
     );

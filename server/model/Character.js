@@ -1,18 +1,26 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const { archetypes, featTypes, powers, skills } = require('../data/rules');
+const {
+  archetypes,
+  conditions,
+  featTypes,
+  featureCooldowns,
+  powers,
+  skills
+} = require('../data/rules');
 const { isHexColor } = require('../../util/regex_validators');
 
-const afflictionConf = (severity) => {
+const conditionConf = (severity) => {
   return {
-    type: String,
-    enum: conditions,
+    condition: {
+      type: String,
+      enum: Object.keys(conditions)
+        .filter((condition) => conditions[condition].severity === severity)
+        .map((condition) => conditions[condition].name)
+    },
     overcomeBy: {
       type: String,
       required: true
-    },
-    required: () => {
-      return this.ranks >= severity * 2;
     }
     // validate: {
     //   validator: (condition) => {
@@ -34,10 +42,8 @@ const colorConf = {
 
 const defenseConf = {
   ranks: {
-    type: Number,
+    ...standardRankConf,
     default: 0,
-    min: 0,
-    max: 3,
     required: true
   },
   buffs: Number,
@@ -53,25 +59,45 @@ const standardRankConf = {
   max: 3
 };
 
+// CREATE SCHEMA
 const characterSchema = new Schema({
-  afflictions: [
+  accesses: [
     {
-      condition1: afflictionConf(1),
-      condition2: afflictionConf(2),
-      condition3: afflictionConf(3)
+      name: {
+        type: String,
+        required: true
+      },
+      accessOption: {
+        type: String,
+        enum: accesses,
+        required: true
+      },
+      notes: {
+        type: String
+      },
+      available: Boolean
     }
   ],
-  archetype: {
-    type: String,
-    enum: archetypes
-  },
+  afflictions: [
+    {
+      ranks: {
+        type: Number,
+        min: 0,
+        max: 6
+      },
+      condition1: conditionConf(1),
+      condition2: conditionConf(2),
+      condition3: conditionConf(3)
+    }
+  ],
+  archetype: { type: String, enum: archetypes },
+  backstory: String,
   complications: [
     {
       name: {
         type: String,
         required: true
       },
-      description: String,
       notes: String
     }
   ],
@@ -81,12 +107,18 @@ const characterSchema = new Schema({
     toughness: defenseConf,
     willpower: defenseConf
   },
+  emblem: String,
   energy: {
     current: {
-      type: Number
+      type: Number,
+      min: 0,
+      max: () => {
+        return this.energy.maximum;
+      }
     },
     maximum: {
       type: Number,
+      min: 0,
       required: true
     },
     buffs: Number,
@@ -103,41 +135,71 @@ const characterSchema = new Schema({
         enum: featTypes,
         required: true
       },
-      description: {
+      cooldown: {
+        type: String,
+        enum: featureCooldowns,
+        required: true
+      },
+      custom: Boolean,
+      customDescription: {
         type: String,
         required: true
-      }
+      },
+      specifier: String
     }
   ],
-  heroTier: {
+  tier: {
     type: Number,
     min: 1,
-    max: 3
+    max: () => {
+      return this.nonHero ? 4 : 3;
+    },
+    required: true
   },
+  imageUrl: String,
   injury: {
     type: Number,
     min: 0,
     max: 12
   },
+  isSummon: Boolean,
   kit: {
-    type: String
+    name: {
+      type: String,
+      required: true
+    },
+    selection1: {
+      type: String,
+      required: true
+    },
+    selection2: {
+      type: String,
+      required: true
+    },
+    feature: {
+      name: {
+        type: String,
+        required: true
+      }
+    },
+    custom: Boolean
   },
   level: {
     type: Number,
     min: 1,
-    max: 10
+    max: 10,
+    required
   },
   motivation: {
-    type: String,
-    required: true
+    type: String
   },
   name: {
     type: String,
     required: true
   },
+  nonHero: Boolean,
   origin: {
-    type: String,
-    required: true
+    type: String
   },
   player: String,
   powers: [
@@ -148,19 +210,25 @@ const characterSchema = new Schema({
         enum: powers.map((power) => power.name),
         required: true
       },
+      specifier: String,
       ranks: {
         ...standardRankConf,
-        default: 0,
+        min: 1,
         required: true
       },
-      specifier: String,
-      notes: String,
-      buffs: Number,
-      flaws: Number,
-      mimickedRanks: Number,
-      shift: Number,
+      buffs: {
+        type: Number,
+        min: 0
+      },
+      flaws: {
+        type: Number,
+        min: 0
+      },
+      mimickedRanks: standardRankConf,
+      nullifyFlaws: standardRankConf,
+      shift: standardRankConf,
       strain: standardRankConf,
-      nullifyFlaws: Number
+      notes: String
     }
   ],
   realName: String,
@@ -177,22 +245,11 @@ const characterSchema = new Schema({
         enum: skills,
         required: true
       },
-      specifier: {
-        type: String,
-        required: function () {
-          return (
-            this.name === 'combat' ||
-            this.name === 'craft' ||
-            this.name === 'expertise'
-          );
-        }
-      },
+      specifier: String,
       ranks: {
         ...standardRankConf,
-        default: 0,
         required: true
       },
-      notes: String,
       buffs: {
         type: Number,
         min: 0
@@ -202,16 +259,49 @@ const characterSchema = new Schema({
         min: 0
       },
       mimickedRanks: standardRankConf,
+      nullifyFlaws: standardRankConf,
       shift: standardRankConf,
       strain: standardRankConf,
-      nullifyFlaws: standardRankConf
+      notes: String
     }
   ],
+  suitInjury: {
+    type: Number,
+    min: 0,
+    max: 12,
+    validate: {
+      validator: () => {
+        return this.archetype === 'suit';
+      },
+      message: (props) => `Suit injury is only applicable to the Suit archetype`
+    }
+  },
+  summons: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Character' }],
+  tags: {
+    type: [String],
+    validate: {
+      validator: (tags) => {
+        return Array.isArray(tags) && new Set(tags).size === tags.length;
+      },
+      message: (props) => `Tags array contains duplicates: ${props.value}`
+    }
+  },
   xp: Number,
+
+  // DATE FIELDS
+  dateCreated: Date,
+  lastAccessed: Date,
+
   // COLOR FIELDS
+  colorBackground: colorConf,
   colorPrimary: colorConf,
   colorSecondary: colorConf,
-  colorAccent: colorConf
+  colorAccent: colorConf,
+
+  // CHARACTER SPACE FIELD
+  characterSpace: [
+    { type: mongoose.Schema.Types.ObjectId, ref: 'CharacterSpace' }
+  ]
 });
 
 module.exports = mongoose.model('Character', characterSchema);

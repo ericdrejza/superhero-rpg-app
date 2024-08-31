@@ -3,40 +3,36 @@ const User = require('../model/User');
 const bcrypt = require('bcrypt');
 
 const handleNewUser = async (req, res) => {
-  const { email, user, pwd } = req.body;
-  if (!email || !user || !pwd) {
-    return res
-      .status(400)
-      .json({ message: 'email, username, and password are required' });
+  // Verify that all required fields exist
+  const { email, user, pwd, firstname, lastname } = req.body;
+  if (!email || !user || !pwd || !firstname || !lastname) {
+    return res.status(400).json({
+      message: 'email, username, password, firstname, and lastname are required'
+    });
   }
+
   // Check for duplicate usernames in the db
   const duplicate = await User.findOne({
-    $or: [{ username: user }, { email: user }]
+    $or: [{ username: user }, { email: email }]
   }).exec();
   if (duplicate) return res.sendStatus(409); // Conflict status
+
   try {
     // encrypt the password
     const hashedPwd = await bcrypt.hash(pwd, 10);
+
+    const profileResult = await Profile.create({
+      firstName: firstname,
+      lastName: lastname
+    });
 
     // Create and store the new user
     const result = await User.create({
       email: email,
       username: user,
-      password: hashedPwd
+      password: hashedPwd,
+      profile: profileResult._id
     });
-
-    // alternate ways to create and save
-    // alt 1
-    // const newUser = new User();
-    // newUser.username = user; // set via dot notation
-    // const result = await newUser.save();
-
-    // alt 2
-    // const newUser = new User({
-    //   username: user,
-    //   password: hashedPwd
-    // }); // pass object as arg to constructor
-    // const result = await newUser.save();
 
     console.log(result);
 

@@ -13,7 +13,9 @@ const userSchema = new Schema({
   },
   profile: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Profile'
+    ref: 'Profile',
+    required: true,
+    unique: true
   },
   refreshToken: String,
   username: {
