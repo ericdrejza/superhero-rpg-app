@@ -1,0 +1,81 @@
+@use "sass:map";
+@use '../../styles/variables';
+
+h1, h2 {
+  text-align: center;
+
+  color: map-get(variables.$theme, "accent");
+}
+
+.Home {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  min-height: 100vh;
+  padding: 80px 20px;
+}
+
+.auth-group {
+  margin-top: 60px;
+  width: 200px;
+
+  a {
+      margin-top: 24px;
+      width: 200px;
+    }
+}
+
+.continue-link {
+  margin-top: 40px;
+}
+
+.subtitle {
+  margin-top: 20px;
+}
+
+.title {
+  // margin-top: 80px;
+  font-size: 5rem;
+}
+.t1 {
+  font-family: 'Allerta Stencil', sans-serif;
+}
+.t2 {
+  font-family: 'Monda', system-ui;
+  font-weight: 700;
+  font-optical-sizing: auto;
+}
+.t3 {
+  font-family: "Francois One", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+.t4 {
+  font-family: "Righteous", system-ui;
+  font-weight: 400;
+  font-style: normal;
+  }
+.t5 {
+font-family: "Merriweather Sans", system-ui;
+  font-optical-sizing: auto;
+  font-weight: 800;
+  font-style: italic;
+}
+.t6 {
+  font-family: "Play", system-ui;
+  font-weight: 700;
+  font-style: italic;
+}
+.t7 {
+  font-family: "Teko", system-ui;
+  font-optical-sizing: auto;
+  font-weight: 800;
+  font-style: normal;
+}
+.t8 {
+  font-family: "Bebas Neue", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}

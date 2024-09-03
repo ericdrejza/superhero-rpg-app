@@ -1,0 +1,11 @@
+@use './styles/variables';
+
+.App {
+  min-height: 100vh;
+  // height: 100vh;
+  background-color: map-get($map: variables.$theme, $key: "background");
+}
+
+h1 {
+  font-size: 4rem;
+}
