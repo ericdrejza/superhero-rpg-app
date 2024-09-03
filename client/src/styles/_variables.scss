@@ -1,0 +1,23 @@
+// @use "../../node_modules/bootstrap/scss/functions";
+// @use "../../node_modules/bootstrap/scss/variables";
+
+// LIGHT
+$light-bg: #dcecf9;
+$light-primary: #3235ce;
+$light-secondary: #65070f;
+$light-dark: #333;
+
+$light: (
+  "background": $light-bg,
+  "primary": $light-primary,
+  'secondary': $light-secondary,
+  'accent': $light-dark
+);
+
+
+// DARK
+
+$theme: map-merge($map1: (), $map2: $light);
+
+// THEME MAP
+// $theme-colors: map-merge($map1: variables.$theme-group, $map2: $light);

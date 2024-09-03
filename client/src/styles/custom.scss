@@ -1,0 +1,26 @@
+// _custom.scss
+
+@use "./variables";
+
+// Import Bootstrap's functions and variables
+@import "node_modules/bootstrap/scss/functions";
+@import "node_modules/bootstrap/scss/variables";
+
+
+// Merge your custom colors with Bootstrap's theme-colors map
+$custom-colors: (
+    // "primary": #214fe8,
+    "secondary": #bf1cca,
+    // "success": #1abc9c,
+    // "info": #3498db,
+    // "warning": #f1c40f,
+    // "danger": #e74c3c,
+    // "light": #ecf0f1,
+    // "dark": #34495e,
+    // "custom-color": #ff5733 // Example custom color
+);
+
+$theme-colors: map-merge($theme-colors, $custom-colors);
+
+// Import the rest of Bootstrap
+@import "node_modules/bootstrap/scss/bootstrap";
