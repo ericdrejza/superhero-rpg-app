@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "description": "Companion app for my superhero RPG",
   "scripts": {
-    "server": "node server/server.js",
-    "client": "npm start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "server": "npm run --prefix server start",
+    "dev-server": "npm run --prefix server dev",
+    "client": "npm run --prefix client start",
+    "dev": "concurrently \"npm run dev-server\" \"npm run client\"",
+    "install-all": "cd client && npm install && cd - && cd server && npm install"
   },
   "repository": {
     "type": "git",
