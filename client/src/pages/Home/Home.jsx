@@ -1,8 +1,13 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Outlet, useLocation } from 'react-router-dom';
 import './Home.scss';
 
+// import Login from '../Login';
+// import Register from '../Register';
+
 const Home = () => {
+  const { pathname } = useLocation();
+
   const title = 'SUPERSONA';
 
   return (
@@ -21,7 +26,9 @@ const Home = () => {
           <h1 className='title t4'>{title}</h1>
         </li>
         <li> */}
-      <h1 className='title t5'>{title}</h1>
+      <h1 className='title t5'>
+        <Link to='/'>{title}</Link>
+      </h1>
       {/* </li>
         <li>
           <h1 className='title t6'>{title}</h1>
@@ -33,14 +40,23 @@ const Home = () => {
           <h1 className='title t8'>{title}</h1>
         </li>
       </ol> */}
-      <div className='auth-group d-flex flex-column justify-content-evenly'>
-        <Link className='btn btn-primary' to='/register'>
-          Sign Up
-        </Link>
-        <Link className='btn btn-outline-dark' to='/login'>
-          Login
-        </Link>
-      </div>
+      {pathname === '/' && (
+        <div className='auth-group d-flex flex-column justify-content-evenly'>
+          <Link className='btn btn-primary' to='/register'>
+            Sign Up
+          </Link>
+          <Link className='btn btn-outline-dark' to='/login'>
+            Login
+          </Link>
+        </div>
+      )}
+      <Outlet />
+      {/* <Routes>
+        <Route path='/'>
+          <Route path='login' element={<Login />} />
+          <Route path='register' element={<Register />} />
+        </Route>
+      </Routes> */}
       {/* <Link className='continue-link btn btn-outline-dark' to='/character'>
       Continue Without Saving
     </Link> */}

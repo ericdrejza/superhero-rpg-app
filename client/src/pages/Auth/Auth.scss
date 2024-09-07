@@ -1,0 +1,25 @@
+a {
+  display: block;
+  text-align: center;
+}
+
+button {
+  width: 200px;
+  align-self: center;
+}
+
+h2 {
+  margin-top: 20px;
+}
+
+.Auth {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+}
