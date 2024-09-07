@@ -1,23 +1,59 @@
-// @use "../../node_modules/bootstrap/scss/functions";
-// @use "../../node_modules/bootstrap/scss/variables";
+@import "../../node_modules/bootstrap/scss/functions";
+@import "../../node_modules/bootstrap/scss/variables";
 
 // LIGHT
 $light-bg: #dcecf9;
 $light-primary: #3235ce;
-$light-secondary: #65070f;
+$light-secondary: #bcbcbc;
 $light-dark: #333;
+$light-text: #333;
 
-$light: (
-  "background": $light-bg,
-  "primary": $light-primary,
-  'secondary': $light-secondary,
-  'accent': $light-dark
+$link-color: $light-text;
+$border-color: $light-text;
+
+$custom-colors-light: (
+  // "background": $light-bg,
+  // "primary": $light-primary,
+  // 'secondary': $light-secondary,
+  // 'accent': $light-dark,
+  // 'text': $light-text,
 );
 
+$custom-colors-text-light: (
+  // "primary": ,
+  // "secondary": ,
+  // "success": ,
+  // "info": ,
+  // "warning": ,
+  // "danger": ,
+  // "light": ,
+  // "dark": ,
+);
 
 // DARK
+$dark-bg: #48aafb;
+$dark-primary: #c932ce;
+$dark-secondary: #dd1d1d;
+$dark-dark: #ddd;
+$dark-text: #e8e8e8;
+$dark-link-color: #c60000;
 
-$theme: map-merge($map1: (), $map2: $light);
+// $body-bg-dark: #bdbd00;
 
-// THEME MAP
-// $theme-colors: map-merge($map1: variables.$theme-group, $map2: $light);
+$custom-colors-dark: (
+  "background": $dark-bg,
+  "primary": $dark-primary,
+  'secondary': $dark-secondary,
+  'accent': $dark-dark,
+);
+
+$custom-colors-text-dark: (
+    // "primary": red,
+    // "secondary": ,
+    // "success": ,
+    // "info": ,
+    // "warning": ,
+    // "danger": ,
+    // "light": ,
+    // "dark": ,
+);

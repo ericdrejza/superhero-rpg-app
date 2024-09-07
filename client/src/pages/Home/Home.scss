@@ -3,7 +3,6 @@
 
 h1, h2 {
   text-align: center;
-  color: map-get(variables.$theme, "accent");
   
   a {
     text-decoration: none;
@@ -20,7 +19,7 @@ h1, h2 {
   padding: 10% 20px 80px;
 }
 
-.auth-group {
+.button-group {
   margin-top: 60px;
   width: 200px;
 
@@ -73,10 +72,6 @@ font-family: "Merriweather Sans", system-ui;
   font-family: "Bebas Neue", system-ui;
   font-weight: 400;
   font-style: normal;
-}
-
-a {
-  color: map-get(variables.$theme, "accent");
 }
 
 // label {

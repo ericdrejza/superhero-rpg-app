@@ -2,9 +2,6 @@ import React from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import './Home.scss';
 
-// import Login from '../Login';
-// import Register from '../Register';
-
 const Home = () => {
   const { pathname } = useLocation();
 
@@ -41,7 +38,7 @@ const Home = () => {
         </li>
       </ol> */}
       {pathname === '/' && (
-        <div className='auth-group d-flex flex-column justify-content-evenly'>
+        <div className='button-group d-flex flex-column justify-content-evenly'>
           <Link className='btn btn-primary' to='/register'>
             Sign Up
           </Link>
@@ -51,12 +48,6 @@ const Home = () => {
         </div>
       )}
       <Outlet />
-      {/* <Routes>
-        <Route path='/'>
-          <Route path='login' element={<Login />} />
-          <Route path='register' element={<Register />} />
-        </Route>
-      </Routes> */}
       {/* <Link className='continue-link btn btn-outline-dark' to='/character'>
       Continue Without Saving
     </Link> */}
