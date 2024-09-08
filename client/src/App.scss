@@ -7,8 +7,8 @@ h1 {
 
 .App {
   min-height: 100vh;
-
-  background-color: $light-bg;
+  max-height: 100%;
+  // background-color: $light-bg;
 }
 
 .dark {

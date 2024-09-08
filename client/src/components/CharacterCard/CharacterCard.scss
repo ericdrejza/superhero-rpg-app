@@ -1,0 +1,41 @@
+.CharacterCard {
+  position: relative;
+  height: 100%;
+  padding: 12px;
+  border: white 1px solid;
+  border-radius: 8px;
+
+  text-align: center;
+}
+
+
+.archetype, .profile {
+  margin-top: 12px;
+}
+
+.level, .tier {
+  position: absolute;
+  top: 8px;
+}
+.level {
+  right: 16px;
+}
+.tier {
+  left: 16px;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  width: 100%;
+  margin-top: 16px;
+}
+
+.tag {
+  display: inline-block;
+  margin-top: 8px;
+  margin-right: 4px;
+  padding: 2px 8px;
+  border-radius: 12px;
+}
