@@ -28,26 +28,32 @@ const CharacterCard = (props) => {
     <div
       onClick={handleCharacterClick}
       className='CharacterCard'
-      style={{ backgroundColor: `${colorPrimary}`, color: `${colorAccent}` }}>
-      <h5 className='tier'>T {tier}</h5>
-      <h5 className='level'>L {level}</h5>
+      style={{
+        backgroundColor: `${colorPrimary}`,
+        color: `${colorAccent}`,
+        borderColor: `${colorAccent}`
+      }}>
+      <h5 className='tier'>T-{tier}</h5>
+      <h5 className='level'>L-{level}</h5>
       <h2 className='name'>{name}</h2>
       <h4 className='archetype'>{archetype}</h4>
       <h6 className='profile'>{profile}</h6>
       <div className='tags'>
-        {tags.map((tag, index) => {
-          return (
-            <span
-              key={index}
-              className='tag'
-              style={{
-                backgroundColor: `${colorSecondary}`,
-                color: `${colorAccent}`
-              }}>
-              {_.capitalize(tag)}
-            </span>
-          );
-        })}
+        {tags
+          .sort((t1, t2) => _.lowerCase(t1).localeCompare(_.lowerCase(t2)))
+          .map((tag, index) => {
+            return (
+              <span
+                key={index}
+                className='tag'
+                style={{
+                  backgroundColor: `${colorSecondary}`,
+                  color: `${colorAccent}`
+                }}>
+                {_.capitalize(tag)}
+              </span>
+            );
+          })}
       </div>
     </div>
   );

@@ -1,10 +1,13 @@
 .CharacterCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
   position: relative;
   height: 100%;
+  overflow-y: hidden;
   padding: 12px;
-  border: white 1px solid;
+  border: white 2px solid;
   border-radius: 8px;
-
   text-align: center;
 }
 

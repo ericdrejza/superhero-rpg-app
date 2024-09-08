@@ -15,7 +15,7 @@ const Characters = () => {
       </div>
       <div className='px-4 character-select-container'>
         <h2 className='page-title'>Character Select</h2>
-        <div className='pt-4'>
+        <div className='pt-2'>
           <CharacterSelect />
         </div>
       </div>
